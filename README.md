@@ -1,16 +1,14 @@
 # POKEDEX
 
 Nome dos integrantes: 
-- Pessoa 1
-- Pessoa 2
-- Pessoa 3
+- Vinícius Moraes
+- Cristiane da Rocha
 
-Link do Surge: www.link.com.br
+Link do Surge: --Ainda sem o surge ---
 
 O que funciona:
-- Item 1
-- Item 2
+- Rotas das páginas
+- Componente Header
 
 O que não funciona: 
-- Item 3
-- Item 4
+- Todo o resto
