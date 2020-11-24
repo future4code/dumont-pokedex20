@@ -1,9 +1,9 @@
 import React from 'react'
 import Header from '../../components/Header/Header'
-import {useHistory} from 'react-router-dom'
+import {useHistory,useParams} from 'react-router-dom'
 
 function DetailsPokemon (){
-	const history = useHistory()
+
 	const backTopage = () => {
 		history.goBack()
 	}
@@ -18,7 +18,6 @@ function DetailsPokemon (){
         		goPokedex={goPokedex}
         		textBtnPokedex={'Minha Pokedex'}
         	/>
-            Detalhes Pokemon
         </div>
     )
 }
