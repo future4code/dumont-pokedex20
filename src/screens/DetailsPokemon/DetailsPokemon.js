@@ -1,10 +1,10 @@
 import React from 'react'
 import Header from '../../components/Header/Header'
-import {useHistory} from 'react-router-dom'
 import {ContainerDetailsPokemons, DivContainerDataPokemons} from './Styled'
+import {useHistory,useParams} from 'react-router-dom'
 
 function DetailsPokemon (){
-	const history = useHistory()
+    const history = useHistory()
 	const backTopage = () => {
 		history.goBack()
 	}
@@ -19,7 +19,6 @@ function DetailsPokemon (){
         		goPokedex={goPokedex}
         		textBtnPokedex={'Minha Pokedex'}
         	/>
-
             <div>
 				<h1>Nome do Pokemon</h1>
 			</div>
@@ -65,6 +64,8 @@ function DetailsPokemon (){
 				</div>
 			</DivContainerDataPokemons>
         </ContainerDetailsPokemons>
+
+        </div>
     )
 }
 export default DetailsPokemon
