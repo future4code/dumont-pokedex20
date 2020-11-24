@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header'
 import {useHistory,useParams} from 'react-router-dom'
 
 function DetailsPokemon (){
-
+    const history = useHistory()
 	const backTopage = () => {
 		history.goBack()
 	}
