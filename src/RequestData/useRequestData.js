@@ -11,3 +11,4 @@ export const useRequestData = (url) => {
 	
 	return data
 }
+

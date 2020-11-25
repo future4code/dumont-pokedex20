@@ -2,14 +2,14 @@ import React, {useEffect,useState} from 'react'
 import Header from '../../components/Header/Header'
 import {useHistory} from 'react-router-dom'
 import {useRequestData} from '../../RequestData/useRequestData'
+import GetImagemPokemon from '../../components/GetImagemPokemon/GetImagemPokemon'
 import axios from 'axios'
-import {ItemPokemnon,TitlePokemon,ImagePokemon,ButtonsPokemon,BtnDetalhesPokemon,BtnAdcionarPokemon,ContentPokemons} from './Styled'
+import {ItemPokemnon,TitlePokemon,ButtonsPokemon,BtnDetalhesPokemon,BtnAdcionarPokemon,ContentPokemons} from './Styled'
 
 function HomePage (){
-    const requestData = useRequestData('https://pokeapi.co/api/v2/pokemon')
-	const history = useHistory()
-    const [urlImage,setUrlImage] = useState('')
-
+    const history = useHistory()
+    const pokemonList = useRequestData('https://pokeapi.co/api/v2/pokemon')
+    
 	const openPokedex = () => {
 		history.push('/Pokedex')
 	}
@@ -17,16 +17,6 @@ function HomePage (){
         history.push(`/DetailsPokemon/${name}`)
     }
 
-    const imagemPokemon = (url) => {
-        let imageURI = ''
-    axios.get(url)
-    .then((res) => {
-        console.log(res.data.sprites.front_default)
-        imageURI = res.data.sprites.front_default
-    })
-    .catch((err) => {console.log(err)})
-    return imageURI
-    }
     return(
         <div>
         	<Header
@@ -34,17 +24,19 @@ function HomePage (){
         		functionBtn={openPokedex}
         	/>
             <ContentPokemons>
-            {requestData.results !== undefined ? requestData.results.map((pokemon) => {
-               return (
-                <ItemPokemnon key={pokemon.name}>
-                    <TitlePokemon>{pokemon.name}</TitlePokemon>
-                    <ButtonsPokemon>
-                        <BtnDetalhesPokemon onClick={() => openDetails(pokemon.name)}> Detalhes </BtnDetalhesPokemon>
-                        <BtnAdcionarPokemon> Adcionar </BtnAdcionarPokemon>
-                    </ButtonsPokemon>
-                </ItemPokemnon>
-                )
-            }) : <ItemPokemnon>teste</ItemPokemnon>}
+               {pokemonList.results !== undefined ? pokemonList.results.map((pokemon,ind) => {
+                    return(
+                            <ItemPokemnon key={pokemon.name}>
+                                <TitlePokemon>{pokemon.name}</TitlePokemon>
+                                <GetImagemPokemon namePokemon={pokemon.url}/>
+                                <ButtonsPokemon>
+                                    <BtnDetalhesPokemon onClick={() => openDetails(pokemon.name)}>Detalhes</BtnDetalhesPokemon>
+                                    <BtnAdcionarPokemon>Adcionar</BtnAdcionarPokemon>
+                                </ButtonsPokemon>
+                            </ItemPokemnon>
+                        )
+
+               }) : <ItemPokemnon>Carregando...</ItemPokemnon> }
             </ContentPokemons>
             <footer>Esse é o foooter </footer>
         </div>
