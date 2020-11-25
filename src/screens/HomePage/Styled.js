@@ -27,7 +27,7 @@ export const TitlePokemon = Styled.h2`
 	font-weight:800;
 	tex-align:center;
 `;
-export const ImagePokemon = Styled.img``;
+
 export const ButtonsPokemon = Styled.div`
  	border-top: 1px solid #888;
  	padding: 5px;
