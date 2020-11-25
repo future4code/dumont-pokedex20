@@ -38,8 +38,6 @@ function HomePage (){
                return (
                 <ItemPokemnon key={pokemon.name}>
                     <TitlePokemon>{pokemon.name}</TitlePokemon>
-                    {setUrlImage(imagemPokemon(pokemon.url))}
-                    <ImagePokemon src={urlImage} alt={pokemon.name}/>
                     <ButtonsPokemon>
                         <BtnDetalhesPokemon onClick={() => openDetails(pokemon.name)}> Detalhes </BtnDetalhesPokemon>
                         <BtnAdcionarPokemon> Adcionar </BtnAdcionarPokemon>
