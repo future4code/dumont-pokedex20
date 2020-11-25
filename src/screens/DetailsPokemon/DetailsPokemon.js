@@ -4,7 +4,9 @@ import {ContainerDetailsPokemons, DivContainerDataPokemons} from './Styled'
 import {useHistory,useParams} from 'react-router-dom'
 
 function DetailsPokemon (){
-    const history = useHistory()
+	const history = useHistory()
+	const pathParams = useParams()
+	
 	const backTopage = () => {
 		history.goBack()
 	}
@@ -63,9 +65,7 @@ function DetailsPokemon (){
 					</div>
 				</div>
 			</DivContainerDataPokemons>
-        </ContainerDetailsPokemons>
-
-        </div>
+        </ContainerDetailsPokemons>        
     )
 }
 export default DetailsPokemon
