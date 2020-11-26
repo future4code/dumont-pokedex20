@@ -1,21 +1,29 @@
-import react from 'react'
-import {Navbar,BtnNavbar,BtnNavbarHidden} from './Styled'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { ContainerHeader, LogoPokedex } from './Styled'
+import {Button} from '../../assets/buttons/Button'
+import Logo from '../../assets/logo.png'
+function Header (){
+	const history = useHistory()
 
-const Header = (props) =>{
-
+	const goToHomePage = ()=>{
+		history.push('/')
+	}
+	const goToPokedex = ()=>{
+		history.push('/pokedex')
+	}
 	return(
-
-			<Navbar>
-				<BtnNavbar onClick={props.functionBtn}>{props.textbutton}</BtnNavbar>
-				<h1>Pokedex</h1>
-				{props.goPokedex ?
-					<BtnNavbar onClick={props.goPokedex}>{props.textBtnPokedex}</BtnNavbar>
-				:
-					<BtnNavbarHidden></BtnNavbarHidden>
-				}
-
-
-			</Navbar>
-		)
+		<ContainerHeader>
+			<div>
+				<Button onClick={goToHomePage}>HomePage</Button>
+			</div>	
+			<div>
+				<LogoPokedex src ={Logo}/>		
+			</div>					
+			<div>
+				<Button onClick={goToPokedex}>Pokedex</Button>
+			</div>
+		</ContainerHeader>
+	)
 }
-export default Header 
+export default Header

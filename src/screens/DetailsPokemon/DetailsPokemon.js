@@ -1,73 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
-import {ContainerDetailsPokemons, ImagePokemon,DivContainerDataPokemons} from './Styled'
-import {useHistory,useParams} from 'react-router-dom'
-import {useRequestData} from '../../RequestData/useRequestData'
+import {useParams} from 'react-router-dom'
+import axios from 'axios'
 
 function DetailsPokemon (){
-	const history = useHistory()
 	const pathParams = useParams()
-	const pokemonDetail = useRequestData(`https://pokeapi.co/api/v2/pokemon/${pathParams.pokename}`)
+	const [pokemonData,setPokemonData]=useState([])
+
+	useEffect(()=>{
+		axios
+			.get(`https://pokeapi.co/api/v2/pokemon/${pathParams.pokename}`)
+			.then((res)=>{
+				setPokemonData(res.data)				
+			})
+			.catch((err)=>{
+				alert(err.message)
+			})
+	},[])	
 	
-	const backTopage = () => {
-		history.goBack()
-	}
-	const goPokedex = () => {
-		history.push('/pokedex')
-	}
-    return(
-        <ContainerDetailsPokemons>
-        	<Header
-        		textbutton={'Voltar'}
-        		functionBtn={backTopage}
-        		goPokedex={goPokedex}
-        		textBtnPokedex={'Minha Pokedex'}
-        	/>
-            <div>
-				<h1>{pokemonDetail.name}</h1>
+	
+	return(
+		<div>
+			<Header/>
+			<div>
+				<h1>{pathParams.pokename}</h1>
 			</div>
-			<DivContainerDataPokemons>
+			<div>
 				<div>
 					<div>
-						<ImagePokemon src={pokemonDetail.sprites !== undefined ? pokemonDetail.sprites.front_default : 'https://picsum.photos/300/300'} />
+						<img src={pokemonData.sprites !== undefined ? pokemonData.sprites.front_default : 'https://picsum.photos/300/300'} />
 					</div>
 					<div>
-						<ImagePokemon src={pokemonDetail.sprites !== undefined ? pokemonDetail.sprites.back_default : 'https://picsum.photos/300/300'} />
+						<img src={pokemonData.sprites !== undefined ? pokemonData.sprites.back_default : 'https://picsum.photos/300/300'} />
 					</div>
 				</div>
 				<div>
-					<div>
-						<h2>Stats</h2>
-					</div>
-					<div>
-						<p><strong>hp:</strong>78</p>
-						<p><strong>attack:</strong>84</p>
-						<p><strong>defense:</strong></p>
-						<p><strong>special-attack:</strong>109</p>
-						<p><strong>special-defence:</strong>85</p>
-						<p><strong>speed:</strong>100</p>
-					</div>
+					<h2>Stats</h2>
+					{pokemonData.stats !== undefined ? pokemonData.stats.map((dados)=>{
+						return(
+							<div>				
+								<p><strong>{dados.stat.name}</strong>: {dados.base_stat}</p>
+							</div>
+						)			
+					}): <p>Carregando...</p>}
 				</div>
 				<div>
 					<div>
-						<p>fire</p>
-						<p>flying</p>
+						{pokemonData.types !== undefined ? pokemonData.types.map((dados)=>{
+							return(
+								<div>				
+									<p><strong>{dados.type.name}</strong></p>
+								</div>
+							)			
+						}): <p>Carregando...</p>}
 					</div>
 					<div>
 						<div>
-							<h2>Principais ataques</h2>
+							<h2>Attacks</h2>
 						</div>
-						<div>
-							<p>mega-punch</p>
-							<p>fire-punch</p>
-							<p>thunder-punch</p>
-							<p>scratch</p>
-							<p>swords-dance</p>
+						<div>						
+							{pokemonData.moves !== undefined ? pokemonData.moves.map((dados,index)=>{
+								if(index<5){
+									return(
+										<div>									
+											<p><strong>{dados.move.name}</strong></p>
+										</div>
+									)			
+								}					
+							}): <p>Carregando...</p>}
 						</div>
 					</div>
 				</div>
-			</DivContainerDataPokemons>
-        </ContainerDetailsPokemons>        
-    )
+				
+			</div>
+		</div>
+	)
 }
+
 export default DetailsPokemon

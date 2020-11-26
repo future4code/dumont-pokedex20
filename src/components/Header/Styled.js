@@ -1,41 +1,23 @@
-import react from 'react'
-import Styled from 'styled-components'
+import styled from 'styled-components'
 
-export const Navbar = Styled.header`
-	display:flex;
-	justify-content:space-between;
+export const ContainerHeader = styled.div `
 	width:100vw;
-	padding: 0 10%;
+	height:15vh;
+	display:flex;	
+	justify-content:space-around;
 	align-items:center;
-	height:50px;
-	background: #fff;
-	box-shadow: 2px 2px 5px #ddd;
-	box-sizing:border-box;
-	text-transform:uppercase;
-	color:#888;
-`;
-export const BtnNavbar = Styled.button`
-	display:flex;
-	justify-content:center;
-	width:150px;
-	align-items:center;
-	height:40px;
-	background: #ddd;
-	border-radius:2px;
-	border:none;
-	color:#888;
-	text-transform:uppercase;
-	cursor:pointer;
-	&:hover{
-		background:#888;
-		color:#ddd;
+	border-bottom:4px solid #ccc;
+	background-color:#EF5350;
+	button{
+		height:8vh;
 	}
-	&:focus{
-		outline:none;
+	div{		
+		display:flex;
+		justify-content:center;
 	}
-`;
-export const BtnNavbarHidden = Styled.div`
-	width:150px;
-	height:40px;
-	background:transparent;
-`; 
+`
+export const LogoPokedex = styled.img `
+	margin-top:20px;		
+	width:70%;
+	
+`

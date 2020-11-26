@@ -1,45 +1,49 @@
-import React, {useEffect,useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Header from '../../components/Header/Header'
-import {useHistory} from 'react-router-dom'
-import {useRequestData} from '../../RequestData/useRequestData'
-import GetImagemPokemon from '../../components/GetImagemPokemon/GetImagemPokemon'
-import axios from 'axios'
-import {ItemPokemnon,TitlePokemon,ButtonsPokemon,BtnDetalhesPokemon,BtnAdcionarPokemon,ContentPokemons} from './Styled'
+import GlobalStateContext from '../../global/GlobalStateContext'
+import Pokemon from '../../components/Pokemon/Pokemon'
+import { CardPokemon, ContainerHomePage } from './Styled'
+
+const lista =[]
 
 function HomePage (){
-    const history = useHistory()
-    const pokemonList = useRequestData('https://pokeapi.co/api/v2/pokemon')
+    const {states, setters,requests} = useContext(GlobalStateContext)    
+
+    useEffect(()=>{
+        requests.getPokemons()        
+    },[])
     
-	const openPokedex = () => {
-		history.push('/Pokedex')
-	}
-    const openDetails = (name) => {
-        history.push(`/DetailsPokemon/${name}`)
+    useEffect(()=>{
+        setters.setPokedex(lista)
+        setters.setPokemons(states.pokemons)
+    },[lista])
+
+    const onClickAdicionar =(pokemon,index)=>{        
+        lista.push(pokemon)        
+        console.log('lista:',lista)
+        console.log('Pokedex:', states.pokedex)
+        states.pokemons.splice(index,1)
+        console.log('estado',states.pokemons)
     }
-
+    
     return(
-        <div>
-        	<Header
-        		textbutton={'Minha Pokedex'}
-        		functionBtn={openPokedex}
-        	/>
-            <ContentPokemons>
-               {pokemonList.results !== undefined ? pokemonList.results.map((pokemon,ind) => {
+        <ContainerHomePage>
+            <Header/>
+            <CardPokemon>
+                {states.pokemons.map((pokemon,index)=>{
                     return(
-                            <ItemPokemnon key={pokemon.name}>
-                                <TitlePokemon>{pokemon.name}</TitlePokemon>
-                                <GetImagemPokemon namePokemon={pokemon.url}/>
-                                <ButtonsPokemon>
-                                    <BtnDetalhesPokemon onClick={() => openDetails(pokemon.name)}>Detalhes</BtnDetalhesPokemon>
-                                    <BtnAdcionarPokemon>Adcionar</BtnAdcionarPokemon>
-                                </ButtonsPokemon>
-                            </ItemPokemnon>
-                        )
-
-               }) : <ItemPokemnon>Carregando...</ItemPokemnon> }
-            </ContentPokemons>
-            <footer>Esse é o foooter </footer>
-        </div>
+                        <Pokemon
+                            name={pokemon.name}
+                            url={pokemon.url}
+                            index={index}
+                            pokemon={pokemon}   
+                            onClickAdicionar={onClickAdicionar}                         
+                        />
+                    )
+                })}            
+            </CardPokemon>
+            
+        </ContainerHomePage>
     )
 }
 export default HomePage
