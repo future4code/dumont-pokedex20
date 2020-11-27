@@ -3,34 +3,50 @@ import Header from '../../components/Header/Header'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import Pokemon from '../../components/Pokemon/Pokemon'
 import { CardPokemon, ContainerHomePage } from './Styled'
+import {BaseUrl} from '../../constants/BaseUrl'
+import axios from 'axios'
 
-const lista =[]
+
 
 function HomePage (){
-    const {states, setters,requests} = useContext(GlobalStateContext)    
-
-    useEffect(()=>{
-        requests.getPokemons()        
-    },[])
+    const {states, setters} = useContext(GlobalStateContext) 
+    const [listaPokemons,setListaPokemons] = useState(states.pokemons)
     
-    useEffect(()=>{
-        setters.setPokedex(lista)
-        setters.setPokemons(states.pokemons)
-    },[lista])
+
+
+    let lista = []
+        useEffect(() => {
+         axios
+            .get(BaseUrl)
+            .then((res)=>{
+                setListaPokemons(res.data.results)              
+            })
+            .catch((err)=>{
+                alert(err.message)
+            })
+         },[])
+
+        const pokeList = listaPokemons.filter(pokemonFromDB => {
+        return !states.pokedex.find(pokemonFromGlobalState => {
+                return pokemonFromDB.name === pokemonFromGlobalState.name
+            })
+        })
+
 
     const onClickAdicionar =(pokemon,index)=>{        
         lista.push(pokemon)        
         console.log('lista:',lista)
+        setters.setPokedex(lista)
         console.log('Pokedex:', states.pokedex)
-        states.pokemons.splice(index,1)
-        console.log('estado',states.pokemons)
+        listaPokemons.splice(index,1)
+        console.log('estado',listaPokemons)
     }
     
     return(
         <ContainerHomePage>
             <Header/>
             <CardPokemon>
-                {states.pokemons.map((pokemon,index)=>{
+                {pokeList.map((pokemon,index)=>{
                     return(
                         <Pokemon
                             name={pokemon.name}
