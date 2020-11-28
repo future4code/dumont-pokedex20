@@ -21,7 +21,8 @@ export const ImgPokemon = styled.div`
     border-radius:10px;
     width:100%;
     img{
-        width:15vw;
+        width:10vw;
+        height:30vh;
     }
 `
 export const NamePokemon = styled.div `

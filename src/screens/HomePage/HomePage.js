@@ -6,41 +6,15 @@ import { CardPokemon, ContainerHomePage } from './Styled'
 import {BaseUrl} from '../../constants/BaseUrl'
 import axios from 'axios'
 
-
-
 function HomePage (){
-    const {states, setters} = useContext(GlobalStateContext) 
-    const [listaPokemons,setListaPokemons] = useState(states.pokemons)
-    
-
-
-    let lista = []
-        useEffect(() => {
-         axios
-            .get(BaseUrl)
-            .then((res)=>{
-                setListaPokemons(res.data.results)              
-            })
-            .catch((err)=>{
-                alert(err.message)
-            })
-         },[])
-
-        const pokeList = listaPokemons.filter(pokemonFromDB => {
-        return !states.pokedex.find(pokemonFromGlobalState => {
-                return pokemonFromDB.name === pokemonFromGlobalState.name
-            })
-        })
-
-
-    const onClickAdicionar =(pokemon,index)=>{        
-        lista.push(pokemon)        
-        console.log('lista:',lista)
-        setters.setPokedex(lista)
-        console.log('Pokedex:', states.pokedex)
-        listaPokemons.splice(index,1)
-        console.log('estado',listaPokemons)
-    }
+    const {states, setters} = useContext(GlobalStateContext)    
+          
+    const onClickAdicionar =(pokemon,index)=>{      
+        let newPokedex = [...states.pokedex,pokemon]          
+        states.pokemons.splice(index,1)
+        setters.setPokedex(newPokedex)    
+        alert(`${pokemon.name} foi adicionado a sua pokedex`)        
+    } 
     
     return(
         <ContainerHomePage>
@@ -48,17 +22,17 @@ function HomePage (){
             <CardPokemon>
                 {pokeList.map((pokemon,index)=>{
                     return(
-                        <Pokemon
+                        <Pokemon key={pokemon.id}
                             name={pokemon.name}
                             url={pokemon.url}
                             index={index}
                             pokemon={pokemon}   
-                            onClickAdicionar={onClickAdicionar}                         
+                            onClickAdicionar={onClickAdicionar}                            
+                            pokedex={false}
                         />
                     )
                 })}            
-            </CardPokemon>
-            
+            </CardPokemon>            
         </ContainerHomePage>
     )
 }
