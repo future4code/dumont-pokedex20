@@ -1,7 +1,7 @@
-
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import GlobalStateContext from './GlobalStateContext'
+import {BaseUrl} from '../constants/BaseUrl'
 
 const GlobalState = (props)=>{
     const [pokemons,setPokemons]=useState([])
