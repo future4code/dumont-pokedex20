@@ -4,27 +4,15 @@ import GlobalStateContext from '../../global/GlobalStateContext'
 import Pokemon from '../../components/Pokemon/Pokemon'
 import { CardPokemon, ContainerHomePage } from './Styled'
 
-const lista =[]
-
 function HomePage (){
-    const {states, setters,requests} = useContext(GlobalStateContext)    
-
-    useEffect(()=>{
-        requests.getPokemons()        
-    },[])
-    
-    useEffect(()=>{
-        setters.setPokedex(lista)
-        setters.setPokemons(states.pokemons)
-    },[lista])
-
-    const onClickAdicionar =(pokemon,index)=>{        
-        lista.push(pokemon)        
-        console.log('lista:',lista)
-        console.log('Pokedex:', states.pokedex)
+    const {states, setters} = useContext(GlobalStateContext)    
+          
+    const onClickAdicionar =(pokemon,index)=>{      
+        let newPokedex = [...states.pokedex,pokemon]          
         states.pokemons.splice(index,1)
-        console.log('estado',states.pokemons)
-    }
+        setters.setPokedex(newPokedex)    
+        alert(`${pokemon.name} foi adicionado a sua pokedex`)        
+    } 
     
     return(
         <ContainerHomePage>
@@ -32,17 +20,17 @@ function HomePage (){
             <CardPokemon>
                 {states.pokemons.map((pokemon,index)=>{
                     return(
-                        <Pokemon
+                        <Pokemon key={pokemon.id}
                             name={pokemon.name}
                             url={pokemon.url}
                             index={index}
                             pokemon={pokemon}   
-                            onClickAdicionar={onClickAdicionar}                         
+                            onClickAdicionar={onClickAdicionar}                            
+                            pokedex={false}
                         />
                     )
                 })}            
-            </CardPokemon>
-            
+            </CardPokemon>            
         </ContainerHomePage>
     )
 }
