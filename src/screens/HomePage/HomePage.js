@@ -3,8 +3,6 @@ import Header from '../../components/Header/Header'
 import GlobalStateContext from '../../global/GlobalStateContext'
 import Pokemon from '../../components/Pokemon/Pokemon'
 import { CardPokemon, ContainerHomePage } from './Styled'
-import {BaseUrl} from '../../constants/BaseUrl'
-import axios from 'axios'
 
 function HomePage (){
     const {states, setters} = useContext(GlobalStateContext)    
@@ -20,7 +18,7 @@ function HomePage (){
         <ContainerHomePage>
             <Header/>
             <CardPokemon>
-                {pokeList.map((pokemon,index)=>{
+                {states.pokemons.map((pokemon,index)=>{
                     return(
                         <Pokemon key={pokemon.id}
                             name={pokemon.name}
