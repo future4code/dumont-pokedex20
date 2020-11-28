@@ -5,11 +5,18 @@ Nome dos integrantes:
 - Cristiane da Rocha
 
 Link do Surge: 
-breakable-activity.surge.sh
+-breakable-activity.surge.sh
 
+O que funciona
+O que não funciona
+Reponsividade
+Desafios
 O que funciona:
-- Rotas das páginas
-- Componente Header
+- Página Home
+- Página Detalhes
+- Página Pokedex
+- Todas requisições
 
 O que não funciona: 
-- Todo o resto
+- responsividade
+- desafios
