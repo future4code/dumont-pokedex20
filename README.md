@@ -1,16 +1,22 @@
 # POKEDEX
 
 Nome dos integrantes: 
-- Pessoa 1
-- Pessoa 2
-- Pessoa 3
+- Vinícius Moraes
+- Cristiane da Rocha
 
-Link do Surge: www.link.com.br
+Link do Surge: 
+-breakable-activity.surge.sh
 
+O que funciona
+O que não funciona
+Reponsividade
+Desafios
 O que funciona:
-- Item 1
-- Item 2
+- Página Home
+- Página Detalhes
+- Página Pokedex
+- Todas requisições
 
 O que não funciona: 
-- Item 3
-- Item 4
+- responsividade
+- desafios
